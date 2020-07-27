@@ -1,0 +1,6 @@
+seldon-core
+scikit-learn
+tensorflow ==2.0.0
+opencv-python
+opencv-contrib-python
+typing
