@@ -10,9 +10,11 @@ WORKDIR /app
 
 #ADD requirement text file to docker GOT STUCK xD BEFORE FIGURING OUT
 COPY Logistic.pickle /app
+COPY labels.csv /app
 COPY requirements.txt /app
-RUN pip install -r requirements.txt
 RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
 
 #RUN ON LOCAL HOST 5000 address
 EXPOSE 5000

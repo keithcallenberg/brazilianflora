@@ -4,6 +4,7 @@ from tensorflow.keras.applications import VGG16
 from tensorflow.keras.applications import imagenet_utils
 from tensorflow.keras.preprocessing.image import img_to_array
 import numpy as np
+import pandas as pd
 import base64
 import json
 import cv2
@@ -13,7 +14,8 @@ class MyModel(object):
 	def __init__(self):
 		#Initialize all necessary models
 		self.feature_extractor = VGG16(weights="imagenet", include_top = False) 
-		self.model = pickle.load(open("Logistic.pickle","rb"))		
+		self.model = pickle.load(open("Logistic.pickle","rb"))
+		self.labels = pd.read_csv("labels.csv")		
 	def predict(self, X:np.ndarray, names:Iterable[str] = None, meta: Dict = None):
 		#getting the image		
 		img = np.array(X, dtype = np.uint8)
@@ -27,5 +29,6 @@ class MyModel(object):
 		features = self.feature_extractor.predict(img, batch_size = 1)
 		features = features.reshape((features.shape[0], 512*7*7))
 		#return a prediction
-		return self.model.predict(features)		
+		results = list(self.labels[self.labels["ID"] == self.model.predict(features)[0]]["SPECIES"].values)	 		
+		return results
 				
