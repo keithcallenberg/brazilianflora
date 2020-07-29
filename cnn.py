@@ -102,6 +102,7 @@ print('Test accuracy:', score[1])
 
 # save model
 model.save('sift_cnn.h5')
+pickle.dump(model, open('sift_cnn.sav', 'wb'))
 
 # visualization
 plt.plot(hist.history['accuracy'])

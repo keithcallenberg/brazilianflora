@@ -12,12 +12,18 @@ from sklearn.cluster import KMeans
 
 
 def sift_feature_extractor(list_images):
+    print("Extracting SIFT Features")
     img_descriptors = []
     orb = cv2.ORB_create(nfeatures=500)
 
+    i = 0
     for image in list_images:
+        print("Descriptor: ", i)
         _, descriptor = orb.detectAndCompute(image, None)
         img_descriptors.append(descriptor)
+        i += 1
+
+    print("Completed Extracting SIFT Features")
 
     return img_descriptors
 
