@@ -134,3 +134,4 @@ dmypy.json
 *.DS_Store
 
 cc78ftcdf9-1/
+__pycache__/
