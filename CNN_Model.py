@@ -15,7 +15,7 @@ class CNN(object):
     def __init__(self):
         # Initialize all necessary models
         self.feature_extractor = VGG16(weights="imagenet", include_top=False)
-        self.model = load_model('sift_cnn.h5')
+        self.model = pickle.load(open("sift_cnn.save", "rb"))
         self.labels = pd.read_csv("labels.csv")
 
     def predict(self, X: np.ndarray, names: Iterable[str] = None, meta: Dict = None):
