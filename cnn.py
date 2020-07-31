@@ -38,6 +38,7 @@ print("num classes: ", num_classes)
 print("training data len: ", len(training_data))
 
 img_desctiptors = sift_feature_extractor(training_data)
+print("descriptors: ", img_desctiptors)
 
 descriptors_list = []
 
@@ -57,10 +58,15 @@ print("X_features.shape: ", X_features.shape)
 print("label.shape: ", label.shape)
 
 X_train, X_test, y_train, y_test = train_test_split(X_features, label, test_size=0.2, random_state=1)
+#model_cnn = sklearn.svm.SVC(C=30, random_state=0, probability=True)
+
+#model_cnn.fit(X_train, y_train)
+#pickle.dump(model_cnn, open('sift_cnn.sav', 'wb'))
+
 
 # normalize features
-X_train = np.array(X_train) / 255
-X_test = np.array(X_test) / 255
+X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], X_train.shape[1], 3)
+X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], X_test.shape[1], 3)
 
 y_train = np.array(to_categorical(y_train))
 y_test = np.array(to_categorical(y_test))
@@ -70,9 +76,11 @@ print('y_train shape:', y_train.shape)
 print('x_test shape:', X_test.shape)
 print('y_test shape:', y_test.shape)
 
+
+
 # build the model
 model = Sequential()
-model.add(Conv2D(32, (5, 5), activation='relu'))
+model.add(Conv2D(32, (5, 5), activation='relu', input_shape=(X_train.shape[1], X_train.shape[1], 3)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 model.add(Conv2D(64, (5, 5), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -95,14 +103,15 @@ hist = model.fit(X_train, y_train,
                  validation_split=0.2
                  )
 
+# save model
+model.save('sift_cnn.h5')
+pickle.dump(model, open('sift_cnn.sav', 'wb'))
+
 # evaluate model
 score = model.evaluate(X_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
-# save model
-model.save('sift_cnn.h5')
-pickle.dump(model, open('sift_cnn.sav', 'wb'))
 
 # visualization
 plt.plot(hist.history['accuracy'])
@@ -121,3 +130,5 @@ plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(['Train', 'Val'], loc='upper right')
 plt.savefig('cnn_loss.png')
+
+"""

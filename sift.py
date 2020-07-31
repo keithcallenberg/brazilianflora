@@ -16,16 +16,20 @@ def sift_feature_extractor(list_images):
     img_descriptors = []
     orb = cv2.ORB_create(nfeatures=500)
 
-    i = 0
     for image in list_images:
         print("Descriptor: ", i)
         _, descriptor = orb.detectAndCompute(image, None)
         img_descriptors.append(descriptor)
-        i += 1
 
     print("Completed Extracting SIFT Features")
 
     return img_descriptors
+
+
+def sift_feature_extractor_img(image):
+    orb = cv2.ORB_create(nfeatures=500)
+    _, descriptor = orb.detectAndCompute(image, None)
+    return descriptor
 
 
 # Create Bag-of-Words dictionary using Kmeans
@@ -34,6 +38,20 @@ def kmean_BOW(descriptors, num_cluster):
 
     kmeans = KMeans(n_clusters=num_cluster)
     kmeans.fit(descriptors)
+
+    bow_dict = kmeans.cluster_centers_
+
+    if not os.path.isfile('bow_dictionary.pkl'):
+        pickle.dump(bow_dict, open('bow_dictionary.pkl', 'wb'))
+
+    return bow_dict
+
+
+def kmean_BOW_img(descriptor, num_cluster):
+    bow_dict = []
+
+    kmeans = KMeans(n_clusters=num_cluster)
+    kmeans.fit(descriptor)
 
     bow_dict = kmeans.cluster_centers_
 
@@ -60,3 +78,14 @@ def create_features_BOW(img_descriptors, bow, num_cluster):
         X_features.append(features)
 
     return X_features
+
+
+def create_features_BOW_img(descriptor, bow, num_cluster):
+    features = np.array([0] * num_cluster)
+    distance = cdist(descriptor, bow)
+    min_dist = np.argmin(distance, axis=1)
+
+    for j in min_dist:
+        features[j] += 1
+
+    return features
