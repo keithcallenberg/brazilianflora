@@ -21,5 +21,7 @@ class CNN(object):
         features = create_features_BOW_img(descriptor, bow, num_cluster).reshape((1, -1))
 
         # return a prediction
-        prediction = labels[self.model.predict(features)[0]]
-        return prediction
+        predict_probs = self.model.predict_proba(features)
+        predict_list = np.argsort(predict_probs)[:, :-5 - 1:-1][0]
+        predictions = [self.labels[str(idx)] for idx in predict_list]
+        return predictions
