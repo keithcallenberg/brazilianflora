@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<link rel='stylesheet' href="{{ url_for ('static', filename='css/indexStyle.css')}}"/>
+		<title> EFI - Endangered Flora Identification </title>
+	</head>
+  <body>
+      <div align="center" id='intro'> This is a image classifier that let user identify the wood species based on wood's microscopic image.</div>
+      <div id="console" align="center">
+		<form method=post enctype=multipart/form-data align="center">
+			<input type="file" accept='image/*' multiple="false" onchange='openFile(event)' name="image" id="image" value="upload image"><br>		
+			<img id= "output" style="height:40%; width:40%;" src = "{{f}}">			
+			<input type="submit" value="Identify object" id="classify"/><br>					
+		</form>
+</div>
+    <script>
+    var openFile = function(file) {
+    var input = file.target;
+
+    var reader = new FileReader();
+    reader.onload = function(){
+      var dataURL = reader.result;
+      var output = document.getElementById('output');
+      output.src = dataURL;
+    };
+    reader.readAsDataURL(input.files[0]);
+  };
+   </script>
+  </body>
+	<footer>
+		<p> Mentor: Keith Callenberg</p>
+		<p> TEAM: Nzinga Eduardo</p>		
+		<p> Sonali Shintre</p>
+		<p> Thanh Dat Le (Harold)</p>
+	</footer>
+</html>

@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  color: #FF0000;
+  background-color: #EEEEEE;
+}
+#intro
+{
+  background-color:#EEEEEE;
+  font-size: 36px;
+  padding: 35px;
+}
+#buttons
+{
+    text-align: center;
+}
+footer
+{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+font-size: 36px;
+  text-align: center;
+}
+
+#adding_button{
+  text-align: center;
+}
+#webcam, #output, #upload_file,#classify
+{
+  display: block;
+  margin: 0 auto;
+}
+#upload_file
+{
+  font-size: 32px;
+  font-weight: bold;
+  border: none;
+  padding: 10px 40px;
+  background-color: #EEEEEE;
+}
+#classify
+{
+  font-size: 32px;
+  font-weight: bold;
+  border: none;
+  padding: 25px;
+  background-color: #EEEEEE;
+}
+#result
+{
+  text-align: center;
+  font-size: 32px;
+  padding-bottom: 25px;
+}
+#console
+{
+  text-align: center;
+  font-size: 32px;
+}

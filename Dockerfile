@@ -12,7 +12,7 @@ WORKDIR /app
 COPY Logistic.pickle /app
 COPY labels.csv /app
 COPY requirements.txt /app
-RUN pip install --upgrade pip
+#RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 
@@ -20,11 +20,17 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # Add Model code
-COPY MyModel.py /app/
-
+COPY DeployModel.py /app/
+COPY LeModel.py /app
+COPY SonaliModel.py /app
+#COPY NzingaModel.py /app
+#COPY sift.py /app
+COPY ImageDataGenerator_model.h5 /app
+COPY EnsembleRandomForest.pickle /app
+COPY sonaliLabels.csv /app
 # Define environment variables
 
-ENV MODEL_NAME MyModel
+ENV MODEL_NAME DeployModel
 ENV API_TYPE REST
 ENV SERVICE_TYPE MODEL
 ENV PERSISTENCE 0

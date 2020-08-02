@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<link rel='stylesheet' href="{{ url_for ('static', filename='css/indexStyle.css')}}"/>
+		<title> EFI - Endangered Flora Identification </title>
+	</head>
+  <body>
+      <div align="center" id='intro'> RESULTS </div>
+	<div id="result">	
+		{{First_judge}}
+	</div>
+	
+	<div id="result">
+		{{Second_judge}}
+	</div>
+	
+	<div id="result">
+		{{Final_judge}}
+	</div>
+	<div  align="center">
+		<button><a href={{url_for('home')}}>Back to main page</a></button>
+	</div>
+
+  </body>
+	<footer>
+		<p> Mentor: Keith Callenberg</p>
+		<p> TEAM: Nzinga Eduardo</p>		
+		<p> Sonali Shintre</p>
+		<p> Thanh Dat Le (Harold)</p>
+	</footer>
+</html>
